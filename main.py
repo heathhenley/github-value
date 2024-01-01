@@ -61,13 +61,12 @@ templates = templating.Jinja2Templates(directory="templates")
 
 
 @app.get("/")
-@limiter.limit("1/second")
 async def index(request: fastapi.Request):
   return templates.TemplateResponse(
     "home/index.html", {"request": request})
 
 @app.get("/share/{username}")
-@limiter.limit("1/second")
+@limiter.limit("30/minute")
 async def share(request: fastapi.Request, username: str):
   if not (res := get_user_data(username)):
     raise fastapi.HTTPException(status_code=404, detail="User not found")
@@ -82,14 +81,13 @@ async def share(request: fastapi.Request, username: str):
     })
 
 @app.get("/compute")
-@limiter.limit("1/second")
 async def compute(request: fastapi.Request):
   return templates.TemplateResponse("compute/form.html", {
     "request": request
   })
 
 @app.post("/compute")
-@limiter.limit("1/second")
+@limiter.limit("30/minute")
 def compute(request: fastapi.Request, username: str = Form(...)):
   if not (res := get_user_data(username)):
     return templates.TemplateResponse(
