@@ -91,13 +91,13 @@ async def compute(request: fastapi.Request):
 @app.post("/compute")
 @limiter.limit("1/second")
 def compute(request: fastapi.Request, username: str = Form(...)):
-
   if not (res := get_user_data(username)):
     return templates.TemplateResponse(
       "compute/form.html", {
         "request": request,
         "error": "User not found"
     })
+  print(f"Compute for: {username}")
   contributions, repos, icon = res
   return templates.TemplateResponse(
     "compute/results.html", {
