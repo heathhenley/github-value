@@ -30,7 +30,6 @@ query {
 
 def get_user_data(username: str) -> tuple | None:
   query = Template(GRAPHQL_QUERY).substitute(username=username)
-  print(query)
   try:
     res = requests.post(BASE_URL, json={"query": f"{query}"},
       headers={
