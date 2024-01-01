@@ -116,3 +116,8 @@ button {
 [data-loading] {
   display: none;
 }
+
+.fa-heart:hover {
+  color: red;
+  scale: 1.2;
+}

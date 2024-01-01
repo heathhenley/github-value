@@ -2,7 +2,7 @@
   <form
     id="github-search-form"
     class="github-search-form fade-me-in fade-me-out"
-    hx-swap="outerHTML"
+    hx-swap="innerHTML"
     hx-target="#container"
     hx-post="/compute"
     data-loading-target="#loading-indicator"
@@ -16,10 +16,10 @@
     />
     <br />
     <button type="submit" data-loading-disable>Compute Value</button>
-    {% if error %}
-      <div class="error">{{ error }}</div>
-    {% endif %}
   </form>
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
   <img
     src="/static/spinning-circles.svg"
     alt="Loading"
