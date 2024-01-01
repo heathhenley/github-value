@@ -4,7 +4,9 @@ import requests
 
 import fastapi
 from fastapi import staticfiles, Form, templating
-from fastapi.responses import RedirectResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 
 GH_TOKEN = os.environ.get("GH_TOKEN")
@@ -51,15 +53,21 @@ app = fastapi.FastAPI()
 app.mount("/static",
           staticfiles.StaticFiles(directory="static"), name="static")
 
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 templates = templating.Jinja2Templates(directory="templates")
 
 
 @app.get("/")
+@limiter.limit("1/second")
 async def index(request: fastapi.Request):
   return templates.TemplateResponse(
     "home/index.html", {"request": request})
 
 @app.get("/share/{username}")
+@limiter.limit("1/second")
 async def share(request: fastapi.Request, username: str):
   if not (res := get_user_data(username)):
     raise fastapi.HTTPException(status_code=404, detail="User not found")
@@ -74,12 +82,14 @@ async def share(request: fastapi.Request, username: str):
     })
 
 @app.get("/compute")
+@limiter.limit("1/second")
 async def compute(request: fastapi.Request):
   return templates.TemplateResponse("compute/form.html", {
     "request": request
   })
 
 @app.post("/compute")
+@limiter.limit("1/second")
 def compute(request: fastapi.Request, username: str = Form(...)):
 
   if not (res := get_user_data(username)):
@@ -97,4 +107,3 @@ def compute(request: fastapi.Request, username: str = Form(...)):
       "repos": repos,
       "icon": icon
   })
-
