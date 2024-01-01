@@ -1,0 +1,30 @@
+<div class="form-wrapper">
+  <form
+    id="github-search-form"
+    class="github-search-form fade-me-in fade-me-out"
+    hx-swap="outerHTML"
+    hx-target="#container"
+    hx-post="/compute"
+    data-loading-target="#loading-indicator"
+  >
+    <input
+      type="text"
+      class="form-control"
+      name="username"
+      placeholder="GitHub Username"
+      required
+    />
+    <br />
+    <button type="submit" data-loading-disable>Compute Value</button>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+  </form>
+  <img
+    src="/static/spinning-circles.svg"
+    alt="Loading"
+    class="data-loading"
+    id="loading-indicator"
+    data-loading
+  />
+</div>

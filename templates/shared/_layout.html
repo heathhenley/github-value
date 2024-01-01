@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %} GitHub Value Calculator {% endblock %}</title>
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,600,600italic,700,700italic|Source+Code+Pro:500"
+    />
+    <link rel="stylesheet" href="/static/style.css" />
+
+  </head>
+  <body hx-ext="loading-states">
+    <nav>
+      <a class="navbar-brand" href="/">
+        <h1> How much is your GitHub Account Worth? </h1>
+      </a>
+    </nav>
+    <main class="main_content">{% block main_content %}{% endblock %}</main>
+    <footer>
+      <div class="copyright">
+        Uses <a href="https://fastapi.tiangolo.com/">FastAPI</a> and
+        <a href="https://htmx.org" target="_blank">HTMX</a> (github)
+      </div>
+    </footer>
+    <script src="/static/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/loading-states.js"></script>
+    {% block additional_js %}{% endblock %}
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<section id="container" class="container">
+  <article>
+    <div class="results-head">
+      <div class="avatarbox">
+        <img
+          class="avatarbox-image"
+          src="{{ icon }}"
+          alt="Avatar from GitHub"
+          width="100px"
+          height="100px"
+        />
+        <div class="avatarbox-label">{{ username }}</div>
+      </div>
+      <div class="nothing-card">
+        <div class="nothing-head"><strong>$0.00</strong></div>
+        <div class="nothing-sub"><em>ZERO dollars.</em></div>
+        <div class="nothing-content">
+          Your GitHub account is worth nothing on its own. Take what you have
+          learned through your <strong>{{ contributions }}</strong> public
+          contributions this year and use it to create value!
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contribution">Your contributions last year:</div>
+      <img
+        src="https://ghchart.rshah.org/{{ username }}"
+        alt="GitHub Contributions Chart thanks to Rishab Shah"
+      />
+    </div>
+    <div class="attribution">
+      Contribution chart by: <a href="https://ghchart.rshah.org">ghchart.rshah.org</a>
+    </div>
+  </article>
+  <article class="search-again">
+    <button class="btn btn-primary" hx-get="/compute" hx-swap="outerHTML">
+      Search again
+    </button>
+  </article>
+</section>
